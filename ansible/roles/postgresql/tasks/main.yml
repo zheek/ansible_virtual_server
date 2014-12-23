@@ -1,0 +1,13 @@
+---
+# Plays for installing postgres
+- include: install.yml
+  tags: [postgresql, postgresql-install]
+
+- include: config.yml
+  tags: [postgresql, postgresql-configure]
+
+- include: databases.yml
+  tags: [postgresql, postgresql-database]
+
+- include: users.yml
+  tags: [postgresql, postgresql-users]

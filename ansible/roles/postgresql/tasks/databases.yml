@@ -1,0 +1,20 @@
+---
+
+- name: PostgreSQL | Ensure PostgreSQL is running
+  service:
+    name: postgresql
+    state: started
+
+# Creates new databases
+- name: PostgreSQL | create the PostgreSQL databases
+  sudo: yes
+  sudo_user: "{{ postgresql_admin_user }}"
+  postgresql_db:
+    name: "{{ item.name }}"
+    encoding: "{{ postgresql_encoding }}"
+    lc_collate: "{{ postgresql_locale }}"
+    lc_ctype: "{{ postgresql_locale }}"
+    template: "template0"
+    state: present
+  with_items: postgresql_databases
+  when: postgresql_databases|length > 0

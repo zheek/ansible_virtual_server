@@ -1,0 +1,30 @@
+
+postgresql_version: "9.3"
+postgresql_encoding: 'UTF-8'
+postgresql_locale: 'en_US.UTF-8'
+
+postgresql_lc_monetary: "en_US.UTF-8"
+postgresql_lc_numeric: "en_US.UTF-8"
+postgresql_lc_time: "en_US.UTF-8"
+
+postgresql_admin_user: "postgres"
+postgresql_admin_group: "postgres"
+
+# Directories
+postgresql_conf_dir: "/etc/postgresql/{{ postgresql_version }}/main"
+
+postgresql_databases:
+ - name: "www-db"
+
+# List of users to be created
+postgresql_users:
+  - username: www-data
+    password: www-data
+    encrypted: "no"
+
+# List of user privileges to be applied
+postgresql_user_privileges:
+  - name: www-data
+    db: www-db
+    priv: "ALL"
+    role_attr_flags: "NOSUPERUSER,NOCREATEDB"

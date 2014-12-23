@@ -1,0 +1,22 @@
+---
+# Installs postgres on the machine
+
+- name: PostgreSQL | install apt module dependent packages
+  apt:
+     name: "{{ item }}"
+     state: present
+     update_cache: yes
+  with_items:
+    - python-psycopg2
+    - python-pycurl
+
+- name: PostgreSQL | install postgres
+  apt:
+     name: "{{ item }}"
+     state: present
+     update_cache: yes
+  with_items:
+    - "postgresql-contrib-{{ postgresql_version }}"
+    - "postgresql-{{ postgresql_version }}"
+    - "postgresql-client-{{ postgresql_version }}"
+

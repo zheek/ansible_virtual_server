@@ -1,0 +1,27 @@
+---
+# configures postgres to accept from all connections
+
+- name: PostgreSQL | copy postgresql configuration
+  template:
+    src: postgresql.conf
+    dest: "{{ postgresql_conf_dir }}/postgresql.conf"
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_group }}"
+    mode: 0640
+  register: postgresql_configuration
+
+- name: PostgreSQL | copy postgres hosts configuration
+  template:
+    src: pg_hba.conf
+    dest: "{{ postgresql_conf_dir }}/pg_hba.conf"
+    owner: "{{ postgresql_admin_user }}"
+    group: "{{ postgresql_admin_group }}"
+    mode: 0640
+  register: postgresql_hosts_configuration
+
+- name: PostgreSQL | Restart PostgreSQL
+  service:
+    name: postgresql
+    state: restarted
+  when: postgresql_configuration.changed or postgresql_hosts_configuration.changed
+
