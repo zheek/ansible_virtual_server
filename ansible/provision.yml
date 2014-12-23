@@ -1,0 +1,9 @@
+---
+# Sets up the infrastructure required for this application
+
+- name: setup host
+  hosts: all
+  sudo: true
+  roles:
+    - setup
+

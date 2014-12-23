@@ -1,0 +1,5 @@
+---
+- name: Set en_US locale
+  copy:
+    src=locale
+    dest=/etc/default/locale
