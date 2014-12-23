@@ -8,4 +8,6 @@
     - setup
     - postgresql
     - apache2
+    - php
+    - owncloud
 

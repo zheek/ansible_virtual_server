@@ -1,0 +1,17 @@
+
+- name: Owncloud | Add Owncloud repository apt-key
+  apt_key:
+    url: "http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_14.10/Release.key"
+    state: present
+
+- name: Owncloud | Add Owncloud repository
+  apt_repository:
+    repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.10/ /'
+    state: present
+
+- name: Owncloud | install Owncloud
+  apt:
+     name: "owncloud"
+     state: present
+     update_cache: yes
+  notify: Restart apache2

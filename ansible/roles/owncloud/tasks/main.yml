@@ -1,0 +1,5 @@
+- include: install.yml
+  tags: [owncloud, owncloud-install]
+
+- include: config.yml
+  tags: [owncloud, owncloud-config]
