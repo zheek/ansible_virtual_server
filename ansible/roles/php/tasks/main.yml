@@ -1,0 +1,15 @@
+
+- name: PHP5 | Install php5
+  apt:
+    name: "php5"
+    state: present
+    update_cache: yes
+
+
+- name: PHP5 | Install php5 packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: [ php5-intl, php5-mcrypt, php5-pgsql, php-pear, php-xml-parser, php5-curl, php5-gd, php5-imagick ]
+
