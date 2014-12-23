@@ -1,0 +1,52 @@
+# Default apache host and ports
+default_apache_port_http: 80
+default_apache_port_https: 443
+default_apache_host: "localhost"
+default_apache_server_aliases: []
+default_email: "admin@localhost"
+
+apache_user: "www-user"
+apache_group: "www-user"
+
+vhost_sites:
+  - {
+      host: 'owncloud',
+      webfolder: '',
+      user: '{{ apache_user }}',
+      group: '{{ apache_group }}',
+      listen_port: '{{ apache_http_port | default(default_apache_port_http) }}',
+      https_port: '{{ apache_https_port | default(default_apache_port_https) }}',
+      admin_email: '{{ apache_admin_email | default(default_email) }}',
+      aliases: '{{ apache_server_aliases | default(default_apache_server_aliases) }}',
+      allowoverride: "None",
+      options: "FollowSymLinks"
+    }
+
+https_vhost_sites:
+  - {
+      host: 'owncloud',
+      webfolder: '',
+      user: '{{ apache_user }}',
+      group: '{{ apache_group }}',
+      listen_port: '{{ apache_https_port | default(default_apache_port_https) }}',
+      admin_email: '{{ apache_admin_email | default(default_email) }}',
+      aliases: '{{ apache_server_aliases | default(default_apache_server_aliases) }}',
+      allowoverride: "None",
+      options: "FollowSymLinks"
+    }
+
+postgresql_databases:
+ - name: "www-db"
+
+# List of users to be created
+postgresql_users:
+  - username: www-user
+    password: www-user
+    encrypted: "no"
+
+# List of user privileges to be applied
+postgresql_user_privileges:
+  - name: www-user
+    db: www-db
+    priv: "ALL"
+    role_attr_flags: "NOSUPERUSER,NOCREATEDB"

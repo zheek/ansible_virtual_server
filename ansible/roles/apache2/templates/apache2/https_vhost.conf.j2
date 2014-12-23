@@ -4,7 +4,7 @@
 
     ServerAdmin {{ item['admin_email'] }}
     ServerName {{ item['host'] }}
-    DocumentRoot {{ apache_root }}/{{ item['host'] }}/item['webfolder']
+    DocumentRoot {{ apache_root }}/{{ item['host'] }}/{{ item['webfolder'] }}
 
     SSLEngine on
     SSLCertificateFile {{ apache_ssl_crt }}
@@ -17,7 +17,7 @@
     ErrorLog "/var/log/apache2/{{ item['host'] }}-error.log"
     CustomLog "/var/log/apache2/{{ item['host'] }}-access.log" common
 
-    <Directory {{ apache_root }}/{{ item['host'] }}/item['webfolder']>
+    <Directory {{ apache_root }}/{{ item['host'] }}/{{ item['webfolder'] }}>
         Options {{ item['options'] }}
         AllowOverride {{ item['allowoverride'] | default("None") }}
         Order allow,deny

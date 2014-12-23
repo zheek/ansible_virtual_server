@@ -5,9 +5,8 @@
     state: present
     update_cache: yes
   with_items: [ "apache2" ]
-  when: ansible_os_family == "Debian"
 
-- stat: path=/etc/apache2/sites-enabled/000-default
+- stat: path=/etc/apache2/sites-enabled/000-default.conf
   register: apache_default_site
 
 - name: Apache2 | Disable the default apache site
