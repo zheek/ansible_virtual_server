@@ -1,0 +1,22 @@
+<?php
+$CONFIG = array (
+  "instanceid" => "oc99453b6154",
+  "passwordsalt" => "28e10a3834bd1c85f114f6d4f2325e",
+  "secret" => "72368e86b0c4959021a1a8f4d8ed6b337d43989da5d75f197ce5eca0df6125cd36d23948f8bcedf338b626cc0e61cbaa",
+  "trusted_domains" =>
+    array (
+{% for domain in owncloud_trusted_domains %}
+      "{{ domain }}",
+{% endfor %}
+    ),
+  "datadirectory" => "/var/www/owncloud/data",
+  "overwrite.cli.url" => "https://192.168.2.101",
+  "dbtype" => "pgsql",
+  "version" => "7.0.4.2",
+  "dbname" => "{{ owncloud_db_name }}",
+  "dbhost" => "localhost",
+  "dbtableprefix" => "oc_",
+  "dbuser" => "{{ owncloud_db_user }}",
+  "dbpassword" => "{{ owncloud_db_password }}",
+  "installed" => true,
+);

@@ -1,6 +1,12 @@
+- name: Owncloud | copy config
+  template:
+    src: config.php.j2
+    dest: /var/www/owncloud/config/config.php
 
-- name: chown owncloud directory
+- name: Owncloud | chown owncloud directory
   command: chdir=/var/www chown -R {{ apache_user }}:{{ apache_group }} owncloud
 
-- name: create log directory
+
+- name: Owncloud | create log directory
   file: dest=/var/log/owncloud state=directory owner={{ apache_user }}
+

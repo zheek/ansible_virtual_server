@@ -1,0 +1,4 @@
+
+owncloud_trusted_domains:
+- '192.168.2.101'
+
