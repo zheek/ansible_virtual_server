@@ -1,0 +1,32 @@
+
+- name: Install GitLab dependencies
+  apt: "pkg={{ item }} state=installed"
+  with_items:
+    - openssh-server
+    - postfix
+
+- name: Check if GitLab configuration file already exists.
+  stat: path=/etc/gitlab/gitlab.rb
+  register: gitlab_config_file
+
+- name: Check if GitLab is already installed.
+  stat: path=/usr/bin/gitlab-ctl
+  register: gitlab_file
+
+- name: Download GitLab .deb package.
+  get_url: >
+    url={{ gitlab_package_url }}
+    dest=/tmp/gitlab.deb
+  when: (gitlab_file.stat.exists == false)
+
+- name: Install GitLab .deb package
+  apt: deb=/tmp/gitlab.deb
+
+# Debian-based OSes seem to fail when starting the first time. It'll fix itself
+# with a second restart, so ignore a failure.
+- name: Reconfigure GitLab (first run - Debian).
+  command: >
+    gitlab-ctl reconfigure
+    creates=/var/opt/gitlab/bootstrapped
+  failed_when: false
+  when: (gitlab_config_file.stat.exists == false)

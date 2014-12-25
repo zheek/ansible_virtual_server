@@ -1,0 +1,11 @@
+- name: Gitlab | Configure apache http vhosts
+  template:
+    src: vhost.conf.j2
+    dest: /etc/apache2/sites-available/{{ gitlab_host }}.conf
+
+- name: Gitlab | Enable vhosts
+  file:
+    src: /etc/apache2/sites-available/{{ gitlab_host }}.conf
+    dest: /etc/apache2/sites-enabled/{{ gitlab_host }}-ssl.conf
+    state: link
+  notify: Restart apache2

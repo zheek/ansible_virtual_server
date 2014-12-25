@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+<VirtualHost *:{{ gitlab_listen_port }}>
+    ServerName {{ gitlab_host }}
+
+    ServerAlias {{ gitlab_host_alias }}
+
+    SSLEngine on
+    SSLCertificateFile /etc/gitlab/ssl/{{ gitlab_hostname }}.crt
+    SSLCertificateKeyFile /etc/gitlab/ssl/{{ gitlab_hostname }}.key
+
+    ProxyPass {{ gitlab_proxy_pass }}
+    ProxyPassReverse {{ gitlab_proxy_pass_reverse }}
+</VirtualHost>

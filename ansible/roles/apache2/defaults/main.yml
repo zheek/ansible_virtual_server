@@ -15,3 +15,4 @@ apache_ssl_crt: '/etc/apache2/certs/ssl.crt'
 apache_mods:
   - rewrite
   - ssl
+  - proxy_http

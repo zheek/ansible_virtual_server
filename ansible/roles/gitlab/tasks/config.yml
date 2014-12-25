@@ -1,0 +1,46 @@
+
+# name: Owncloud | create owncloud user to store data
+- group: name=gitlab state=present
+- user: name=gitlab group=gitlab state="present"
+
+- name: Gitlab | Check if data directory already exists
+  stat: path=/home/gitlab/git-data
+  register: gitlab_data
+
+- name: Gitlab | create data folder in gitlab user home
+  file:
+    path: /home/gitlab/git-data
+    state: directory
+    owner: gitlab
+    group: gitlab
+  when: (gitlab_data.stat.isdir is not defined) or (gitlab_data.stat.isdir == false)
+
+- name: Gitlab | create certificate folder
+  file:
+    path: /etc/gitlab/ssl
+    state: directory
+    owner: root
+    group: root
+
+- name: Gitlab | Copy https certificates.
+  copy:
+    src: ssl.crt
+    dest: /etc/gitlab/ssl/{{ gitlab_hostname }}.crt
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Gitlab | Copy https certificates.
+  copy:
+    src: ssl.key
+    dest: /etc/gitlab/ssl/{{ gitlab_hostname }}.key
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Gitlab | Copy GitLab configuration file.
+  template:
+    src=gitlab.rb.j2
+    dest=/etc/gitlab/gitlab.rb
+    owner=root group=root mode=600
+  notify: restart gitlab

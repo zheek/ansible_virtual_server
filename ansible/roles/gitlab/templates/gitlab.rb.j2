@@ -1,0 +1,14 @@
+nginx['enable'] = false
+ci_nginx['enable'] = false
+
+web_server['external_users'] = ['{{ apache_user }}']
+nginx['redirect_http_to_https'] = true
+
+# The URL through which GitLab will be accessed.
+external_url "{{ gitlab_external_url }}"
+
+# The directory where Git repositories will be stored.
+git_data_dir "{{ gitlab_git_data_dir }}"
+
+# To change other settings, see:
+# https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md#changing-gitlab-yml-settings

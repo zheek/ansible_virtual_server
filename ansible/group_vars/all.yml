@@ -1,3 +1,5 @@
+domain_name: local.com
+
 # Default apache host and ports
 default_apache_port_http: 80
 default_apache_port_https: 443
@@ -17,7 +19,7 @@ vhost_sites:
     listen_port: '{{ apache_http_port | default(default_apache_port_http) }}',
     https_port: '{{ apache_https_port | default(default_apache_port_https) }}',
     admin_email: '{{ apache_admin_email | default(default_email) }}',
-    aliases: '{{ apache_server_aliases | default(default_apache_server_aliases) }}',
+    aliases: ['owncloud.{{ domain_name }}'],
     allowoverride: "None",
     options: "FollowSymLinks"
   }
@@ -30,7 +32,7 @@ https_vhost_sites:
     group: '{{ apache_group }}',
     listen_port: '{{ apache_https_port | default(default_apache_port_https) }}',
     admin_email: '{{ apache_admin_email | default(default_email) }}',
-    aliases: '{{ apache_server_aliases | default(default_apache_server_aliases) }}',
+    aliases: ['owncloud.{{ domain_name }}'],
     allowoverride: "None",
     options: "FollowSymLinks"
   }

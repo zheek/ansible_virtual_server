@@ -1,0 +1,8 @@
+- include: install.yml
+  tags: [gitlab, gitlab-install]
+
+- include: config.yml
+  tags: [gitlab, gitlab-config]
+
+- include: apache2.yml
+  tags: [gitlab, gitlab-apache2]
