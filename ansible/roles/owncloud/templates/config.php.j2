@@ -9,7 +9,7 @@ $CONFIG = array (
       "{{ domain }}",
 {% endfor %}
     ),
-  "datadirectory" => "/var/www/owncloud/data",
+  "datadirectory" => "/home/owncloud/data/",
   "overwrite.cli.url" => "https://192.168.2.101",
   "dbtype" => "pgsql",
   "version" => "7.0.4.2",
@@ -19,4 +19,5 @@ $CONFIG = array (
   "dbuser" => "{{ owncloud_db_user }}",
   "dbpassword" => "{{ owncloud_db_password }}",
   "installed" => true,
+  'forcessl' => true,
 );

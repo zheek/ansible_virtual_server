@@ -6,7 +6,43 @@
 - name: Owncloud | chown owncloud directory
   command: chdir=/var/www chown -R {{ apache_user }}:{{ apache_group }} owncloud
 
-
 - name: Owncloud | create log directory
-  file: dest=/var/log/owncloud state=directory owner={{ apache_user }}
+  file:
+    dest=/var/log/owncloud
+    state=directory
+    owner={{ apache_user }}
+
+# name: Owncloud | create owncloud user to store data
+- group: name=owncloud state=present
+- user: name=owncloud group=owncloud state="present"
+
+- name: Check if data directory already exists
+  stat: path=/home/owncloud/data
+  register: owncloud_data
+
+- name: Owncloud | create data folder in owncloud user home
+  file:
+    path: /home/owncloud/data
+    state: directory
+    owner: "owncloud"
+    group: "owncloud"
+  when: (owncloud_data.stat.isdir is not defined) or (owncloud_data.stat.isdir == false)
+
+- name: Owncloud | copy www data folder contents to owncloud data
+  command: cp -r /var/www/owncloud/data /home/owncloud/
+  when: (owncloud_data.stat.isdir is not defined) or (owncloud_data.stat.isdir == false)
+
+- name: Owncloud | set ownership of data folder in owncloud user home
+  file:
+    path: /home/owncloud/data
+    state: directory
+    owner: "owncloud"
+    group: "owncloud"
+  when: (owncloud_data.stat.isdir is not defined) or (owncloud_data.stat.isdir == false)
+
+- name: Owncloud | delete www data folder
+  file:
+    dest=/var/www/owncloud/data
+    state=absent
+  when: (owncloud_data.stat.isdir is not defined) or (owncloud_data.stat.isdir == false)
 
