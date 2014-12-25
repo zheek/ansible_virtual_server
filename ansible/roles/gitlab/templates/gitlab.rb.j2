@@ -1,8 +1,8 @@
-nginx['enable'] = false
-ci_nginx['enable'] = false
+#nginx['enable'] = false
+#ci_nginx['enable'] = false
 
 web_server['external_users'] = ['{{ apache_user }}']
-nginx['redirect_http_to_https'] = true
+#nginx['redirect_http_to_https'] = true
 
 # The URL through which GitLab will be accessed.
 external_url "{{ gitlab_external_url }}"

@@ -1,13 +1,31 @@
 # {{ ansible_managed }}
 <VirtualHost *:{{ gitlab_listen_port }}>
-    ServerName {{ gitlab_host }}
+  ServerName {{ gitlab_host }}
+  ServerAlias {{ gitlab_host_alias }}
+  ServerSignature Off
 
-    ServerAlias {{ gitlab_host_alias }}
+  SSLEngine on
+  SSLCertificateFile /etc/gitlab/ssl/{{ gitlab_hostname }}.crt
+  SSLCertificateKeyFile /etc/gitlab/ssl/{{ gitlab_hostname }}.key
 
-    SSLEngine on
-    SSLCertificateFile /etc/gitlab/ssl/{{ gitlab_hostname }}.crt
-    SSLCertificateKeyFile /etc/gitlab/ssl/{{ gitlab_hostname }}.key
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
 
-    ProxyPass {{ gitlab_proxy_pass }}
-    ProxyPassReverse {{ gitlab_proxy_pass_reverse }}
+  SSLProxyEngine on
+  SSLProxyVerify none
+  SSLProxyCheckPeerCN off
+  SSLProxyCheckPeerName off
+  SSLProxyCheckPeerExpire off
+
+  ProxyPass {{ gitlab_proxy_pass }}
+  ProxyPassReverse {{ gitlab_proxy_pass_reverse }}
+
+  #Header edit Location ^http://<url>/ https://<url>/
+  #RequestHeader set X-Forwarded-Proto "https"
+
+  # needed for downloading attachments
+  # DocumentRoot /opt/gitlab/embedded/service/gitlab-rails/public
+
 </VirtualHost>

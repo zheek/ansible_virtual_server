@@ -2,7 +2,7 @@ gitlab_package_url: https://downloads-packages.s3.amazonaws.com/ubuntu-14.04/git
 
 gitlab_hostname: 'localhost'
 
-gitlab_external_url: 'https://{{ gitlab_hostname }}:2443'
+gitlab_external_url: 'https://{{ gitlab_hostname }}:4443'
 
 gitlab_git_data_dir: /home/gitlab/git-data
 
