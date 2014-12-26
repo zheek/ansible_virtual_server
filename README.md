@@ -27,10 +27,20 @@ Please disable SendEnv in the settings of your ssh client (/etc/ssh/ssh_config):
    # SendEnv LANG LC_*
 ````
 
-After this, go to the root of the repository and issue:
+- Testing
+Go to the root of the repository and issue:
 
 ````bash
     vagrant up
 ````
 
 The virtual machine will need a few minutes to build, upgrade and install the software and database.
+
+Add the following lines to the /etc/hosts on the host machine
+
+192.168.2.101 git.local.com
+192.168.2.101 owncloud.local.com
+
+
+
+
