@@ -7,8 +7,8 @@ default_apache_host: "localhost"
 default_apache_server_aliases: []
 default_email: "admin@localhost"
 
-apache_user: "www-user"
-apache_group: "www-user"
+apache_user: "www-data"
+apache_group: "www-data"
 
 vhost_sites:
 - {

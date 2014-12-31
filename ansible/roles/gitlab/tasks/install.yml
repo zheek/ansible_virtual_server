@@ -17,6 +17,7 @@
   get_url: >
     url={{ gitlab_package_url }}
     dest=/tmp/gitlab.deb
+    timeout=300
   when: (gitlab_file.stat.exists == false)
 
 - name: Install GitLab .deb package
